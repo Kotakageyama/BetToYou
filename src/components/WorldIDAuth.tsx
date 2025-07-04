@@ -33,7 +33,7 @@ export function WorldIDAuth({ onSuccess, onError }: WorldIDAuthProps) {
     }
   };
 
-  const handleError = (error: any) => {
+  const handleError = (error: unknown) => {
     console.error('World ID error:', error);
     onError?.('World ID verification failed');
   };

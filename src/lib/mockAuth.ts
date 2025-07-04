@@ -23,7 +23,7 @@ const mockProof: WorldIDProof = {
 };
 
 // モック認証関数
-export async function verifyWorldIDProof(proof: any): Promise<AuthResult> {
+export async function verifyWorldIDProof(proof: unknown): Promise<AuthResult> {
   // サンドボックス環境での遅延をシミュレート
   await new Promise(resolve => setTimeout(resolve, 1000));
   

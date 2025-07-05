@@ -2,6 +2,7 @@ import { IDKitWidget, VerificationLevel, type ISuccessResult } from '@worldcoin/
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { verifyWorldIDProof } from '../lib/mockAuth';
+import { useNavigate } from 'react-router-dom';
 
 interface WorldIDAuthProps {
   onSuccess?: (uid: string) => void;
@@ -11,6 +12,7 @@ interface WorldIDAuthProps {
 export function WorldIDAuth({ onSuccess, onError }: WorldIDAuthProps) {
   const { signIn, signOut, isAuthenticated, uid } = useAuth();
   const [isVerifying, setIsVerifying] = useState(false);
+  const navigate = useNavigate();
 
   const handleVerify = async (proof: ISuccessResult) => {
     setIsVerifying(true);
@@ -20,8 +22,12 @@ export function WorldIDAuth({ onSuccess, onError }: WorldIDAuthProps) {
       const result = await verifyWorldIDProof(proof);
       
       if (result.success) {
-        signIn(result.uid, result.userType);
+        // Save the UID temporarily without userType to allow selection
+        signIn(result.uid, 'pending');
         onSuccess?.(result.uid);
+        
+        // Redirect to user type selection
+        navigate('/select-user-type');
       } else {
         onError?.(result.error || 'Verification failed');
       }

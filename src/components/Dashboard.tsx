@@ -1,5 +1,6 @@
 import { useAuth } from '../contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { ScholarshipCertificateUpload } from './ScholarshipCertificateUpload';
 
 interface DashboardProps {
   userType: 'scholar' | 'individual' | 'corporate';
@@ -98,6 +99,15 @@ export function Dashboard({ userType }: DashboardProps) {
             </Card>
           ))}
         </div>
+
+        {userType === 'scholar' && (
+          <div className="mt-8">
+            <h3 className="text-xl font-bold text-gray-900 mb-4">
+              証明書管理
+            </h3>
+            <ScholarshipCertificateUpload />
+          </div>
+        )}
 
         <div className="mt-8 p-4 bg-blue-50 rounded-lg">
           <h3 className="font-semibold text-blue-900 mb-2">
